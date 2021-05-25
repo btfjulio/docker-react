@@ -8,4 +8,16 @@ before_install:
   - docker build -t btfjulio/docker-react -f Dockerfile.dev .
 
 script:
-  - docker run -e CI=true btfjulio/docker-react npm run test 
+  - docker run -e CI=true btfjulio/docker-react npm run test
+
+deploy:
+  provider: elasticbeastalk
+  region: "us-east-2"
+  app: "btfjulio-docker-react"
+  env: "Btfjuliodockerreact-env"
+  bucket_name: "elasticbeanstalk-us-east-2-987707233301"
+  bucket_path: "btfjulio-docker-react"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
